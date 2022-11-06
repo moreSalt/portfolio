@@ -24,53 +24,53 @@
 
 
     <div class="grid grid-rows-fr grid-cols-1  md:grid-cols-2 lg-grid-cols-4 w-2/3 border shadow-xl bg-base-200 p-2 rounded gap-4">
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-js"></i>
             JS/TS
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-js"></i>
             Svelte/Sveltekit
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-node-js"></i>
             Node.js
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-python"></i>
             Python
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-solid fa-c"></i>
             C++
         </div>
 
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-golang"></i>
             Go
         </div>
 
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-html5"></i>
             HTML/CSS
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-css3"></i>
             Tailwind CSS
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-git-alt"></i>
             Git
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-brands fa-aws"></i>
             AWS
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-solid fa-server"></i>
             Supabase
         </div>
-        <div class="flex gap-2 items-center justify-center">
+        <div class="flex gap-2 items-center justify-center hover:text-accent ">
             <i class="fa-solid fa-database"></i>
             Mongo, Postgres, Redis
         </div>
@@ -79,7 +79,7 @@
 
     <div class="grid grid-cols-1 gap-4 sm:gap-0 sm:grid-cols-2 w-2/3">
         
-        <a class="border p-4 w-full gap-2" href="./" target="_blank" rel="noreferrer">
+        <a class="border p-4 w-full gap-2 hover:border-primary" href="./" target="_blank" rel="noreferrer">
             <h2 class="card-title">
                 <i class="fa-solid fa-briefcase"></i>
                   
@@ -90,7 +90,7 @@
 
         </a>
 
-        <a class="border p-4 w-full gap-2" href="https://github.com/moreSalt/portfolio" target="_blank" rel="noreferrer">
+        <a class="border p-4 w-full gap-2 hover:border-primary" href="https://github.com/moreSalt/portfolio" target="_blank" rel="noreferrer">
             <h2 class="card-title">
                 <i class="fa-solid fa-user"></i>
                 Personal portfolio
@@ -100,7 +100,7 @@
 
         </a>
 
-        <a class="border p-4 w-full gap-2" href="https://github.com/moreSalt/calen-duh" target="_blank" rel="noreferrer">
+        <a class="border p-4 w-full gap-2 hover:border-primary" href="https://github.com/moreSalt/calen-duh" target="_blank" rel="noreferrer">
             <h2 class="card-title">
                 <i class="fa-solid fa-user"></i>
                 Calenduh
@@ -110,7 +110,7 @@
 
         </a>
 
-        <a class="border p-4 w-full gap-2" href="https://github.com/moreSalt/hellofresh-instacart" target="_blank" rel="noreferrer">
+        <a class="border p-4 w-full gap-2 hover:border-primary" href="https://github.com/moreSalt/hellofresh-instacart" target="_blank" rel="noreferrer">
             <h2 class="card-title">
                 <i class="fa-solid fa-user"></i>
                 HelloFresh to Instacart
@@ -120,7 +120,17 @@
 
         </a>
 
-        <a class="border p-4 w-full gap-2 col-span-full" href="./" target="_blank" rel="noreferrer">
+        <a class="border p-4 w-full gap-2" target="_blank" rel="noreferrer">
+            <h2 class="card-title">
+                <i class="fa-solid fa-graduation-cap"></i>
+                University of Colorado Boulder
+            </h2>
+            <p class="text-slate-400 text-sm">Oct 2022</p>
+            <p>I am currently enrolled at CU Boulder in Computer Science</p>
+
+        </a>
+
+        <a class="border p-4 w-full gap-2" target="_blank" rel="noreferrer">
             <h2 class="card-title">
                 <i class="fa-solid fa-user"></i>
                 +more
