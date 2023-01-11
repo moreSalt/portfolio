@@ -248,7 +248,7 @@
 	</div>
 </div>
 
-<main class="w-full flex flex-col items-center gap-8 mb-4">
+<main class="w-full flex flex-col items-center gap-8 mb-4 select-none">
 	<p class="text-accent font-extrabold text-xl">Fullstack developer in Boulder.</p>
 
 	<h1 class="text-5xl font-extrabold text-primary">Hi I'm Paul</h1>
