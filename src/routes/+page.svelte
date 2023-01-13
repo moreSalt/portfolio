@@ -26,7 +26,7 @@
 
 	interface Skill {
 		title: string
-		type: "lang" | "cloud" | "db" | "tool"
+		type: "lang" | "cloud" | "db" | "tool" | "styling"
 	}
 
 	const works: Work[] = [
@@ -38,6 +38,15 @@
 			startDate: "May 2021",
 			endDate: "Present",
 			description: `Built and maintained a Sveltekit + Tailwind CSS webapp. Worked on expanding features in the backend (Node.js). Currently working on moving everything to a serverless AWS environment and rewriting in Go`
+		},
+		{
+			title: "Lever Scrape",
+			type: "project",
+			at: "Project",
+			url: "https://github.com/moreSalt/lever-scrape",
+			startDate: "Jan 2023",
+			endDate: "Jan 2023",
+			description: `A Lever and Greenhouse job board scraper built in Go to find positions based on user's keywords`
 		},
 		{
 			title: "Portfolio",
@@ -125,12 +134,16 @@
 			type: "lang"
 		},
 		{
-			title: "HTML/CSS",
+			title: "HTML",
 			type: "lang"
 		},
 		{
+			title: "CSS",
+			type: "styling"
+		},
+		{
 			title: "Tailwind CSS",
-			type: "lang"
+			type: "styling"
 		},
 		{
 			title: "Git",
@@ -289,6 +302,13 @@
 							stroke-linejoin="round"
 							stroke-width="2"
 							d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"
+						/>
+					{:else if skill.type === "styling"}
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" 
 						/>
 					{:else if skill.type === "tool"}
 						<path
