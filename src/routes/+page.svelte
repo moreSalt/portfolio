@@ -40,6 +40,24 @@
 			description: `Built and maintained a Sveltekit + Tailwind CSS webapp. Worked on expanding features in the backend (Node.js). Currently working on moving everything to a serverless AWS environment and rewriting in Go`
 		},
 		{
+			title: "Computer Science B.S.",
+			type: "edu",
+			at: "CU Boulder",
+			url: "",
+			startDate: "Aug 2022",
+			endDate: "Present",
+			description: `Getting educated one day at a time.`
+		},
+		{
+			title: "Hobnob",
+			type: "project",
+			at: "Project",
+			url: "https://hobnob.fluster.dev",
+			startDate: "May 2023",
+			endDate: "Present",
+			description: `Search for events in your favorite cities or from your favorite artists`
+		},
+		{
 			title: "Lever Scrape",
 			type: "project",
 			at: "Project",
@@ -74,15 +92,6 @@
 			startDate: "Oct 2022",
 			endDate: "Oct 2022",
 			description: `A script to fetch all of the ingredients from a Hellofresh recipe and add them to Instacart`
-		},
-		{
-			title: "Computer Science B.S.",
-			type: "edu",
-			at: "CU Boulder",
-			url: "",
-			startDate: "Aug 2022",
-			endDate: "Present",
-			description: `Getting educated one day at a time.`
 		},
 		{
 			title: "Squarespace DL",
@@ -358,9 +367,9 @@
 			{#each works as work, i}
 				<a 
 					class="border border-2 border-info shadow-xl rounded-lg p-4 w-full gap-2 flex flex-col"
-					class:border-success="{i % 2 === 0}"
-					class:border-warning="{i % 3 === 0}"
-					class:border-error="{i % 4 === 0}"
+					
+
+
 					href={work.url}
 					target="_blank"
 					rel="noreferrer"
@@ -400,9 +409,7 @@
 					</p>
 					<h2 
 						class="card-title text-info"
-						class:text-success="{i % 2 === 0}"
-						class:text-warning="{i % 3 === 0}"
-						class:text-error="{i % 4 === 0}"
+		
 					>{work.title}</h2>
 					<p class="text-sm font-semibold">{work.startDate} - {work.endDate}</p>
 					<p>
