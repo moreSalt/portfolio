@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"daisyui": "^2.38.1"
+		"daisyui": "^2.38.1",
+		"marked": "^9.1.2"
 	}
 }

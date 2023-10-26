@@ -1,429 +1,170 @@
 <script lang="ts">
-
-	const date1 = new Date("2020-08-01");
-	const date2 = new Date();
-
-    // One day in milliseconds
-    const oneDay = 1000 * 60 * 60 * 24;
-
-    // Calculating the time difference between two dates
-    const diffInTime = date2.getTime() - date1.getTime();
-
-    // Calculating the no. of days between two dates
-    const diffInDays = Math.round(diffInTime / oneDay);
-
-    const years = Math.round(diffInDays / 365)
-
-	interface Work {
-		title: string
-		type: "work" |  "edu" | "project"
-		at: string
-		url: string
-		startDate: string
-		endDate: string
+	interface Experience {
+		company: string
+		avatar: string
+		position: string
+		start: number
+		end: number | null
 		description: string
 	}
-
-	interface Skill {
-		title: string
-		type: "lang" | "cloud" | "db" | "tool" | "styling"
-	}
-
-	const works: Work[] = [
+	const experiences: Experience[] = [
 		{
-			title: "Software Developer",
-			type: "work",
-			at: "Redacted",
-			url: "",
-			startDate: "May 2021",
-			endDate: "Present",
-			description: `Built and maintained a Sveltekit + Tailwind CSS webapp. Worked on expanding features in the backend (Node.js). Currently working on moving everything to a serverless AWS environment and rewriting in Go`
-		},
-		{
-			title: "Computer Science B.S.",
-			type: "edu",
-			at: "CU Boulder",
-			url: "",
-			startDate: "Aug 2022",
-			endDate: "Present",
-			description: `Getting educated one day at a time.`
-		},
+			company: "Stackd",
+			avatar: "https://www.stackd.one/_next/image?url=https%3A%2F%2Fstackd-website.s3.us-east-2.amazonaws.com%2Fanalytic.png&w=3840&q=75",
+			position: "Software Developer",
+			start: 21,
+			end: 22,
+			description: "Built and maintained a CLI desktop application and Chrome extension using node.js, TS, Tailwind, and Sveltekit"
+
+		}
+	]
+
+	const blogs = [
 		{
 			title: "Hobnob",
-			type: "project",
-			at: "Project",
-			url: "https://hobnob.fluster.dev",
-			startDate: "May 2023",
-			endDate: "Present",
-			description: `Search for events in your favorite cities or from your favorite artists`
+			description: "Find events in your city or favorite artists",
+			date: "June 16, 2023",
+			url: "https://github.com/moreSalt/hobnob-client"
 		},
 		{
 			title: "Lever Scrape",
-			type: "project",
-			at: "Project",
-			url: "https://github.com/moreSalt/lever-scrape",
-			startDate: "Jan 2023",
-			endDate: "Jan 2023",
-			description: `A Lever and Greenhouse job board scraper built in Go to find positions based on user's keywords`
+			description: "Scrape Lever and Greenhouse job boards for roles",
+			date: "January 30, 2023",
+			url: "https://github.com/moreSalt/lever-scrape"
 		},
 		{
-			title: "Portfolio",
-			type: "project",
-			at: "Project",
-			url: "https://github.com/moreSalt/portfolio",
-			startDate: "Nov 2022",
-			endDate: "Present",
-			description: `You are here right now. Built with Sveltekit and Tailwind, deployed on Vercel.`
-		},
-		{
-			title: "Calenduh",
-			type: "project",
-			at: "Project",
-			url: "https://github.com/moreSalt/calen-duh",
-			startDate: "Oct 2022",
-			endDate: "Oct 2022",
-			description: `A simple web calendar I built to play with Sveltekit and Supabase.`
-		},
-		{
-			title: "Hellofresh to Instacart",
-			type: "project",
-			at: "Project",
-			url: "https://github.com/moreSalt/hellofresh-instacart",
-			startDate: "Oct 2022",
-			endDate: "Oct 2022",
-			description: `A script to fetch all of the ingredients from a Hellofresh recipe and add them to Instacart`
-		},
-		{
-			title: "Squarespace DL",
-			type: "project",
-			at: "Project",
-			url: "",
-			startDate: "Oct 2022",
-			endDate: "Coming soon",
-			description: `A package to scrape content from a Squarespace website, even if it's behind a paywall.`
-		},
-		{
-			title: "+more",
-			type: "project",
-			at: "Project",
-			url: "",
-			startDate: "Aug 2020",
-			endDate: "Present",
-			description: `Wondering what else I have been working on, just shoot me an email.`
-		},
+			title: "HelloFresh to Instacart",
+			description: "Easily find Hello Fresh recipe ingredients in Instacart ",
+			date: "September 24, 2022",
+			url: "https://github.com/moreSalt/hellofresh-instacart"
+		}
+
 	]
 
-	const skills: Skill[] = [
-		{
-			title: "Javascript",
-			type: "lang"
-		},
-		{
-			title: "Typescript",
-			type: "lang"
-		},
-		{
-			title: "Node.js",
-			type: "lang"
-		},
-		{
-			title: "Svelte / Sveltekit",
-			type: "lang",
-		},
-		{
-			title: "Python",
-			type: "lang"
-		},
-		{
-			title: "Go",
-			type: "lang"
-		},
-		{
-			title: "C++",
-			type: "lang"
-		},
-		{
-			title: "HTML",
-			type: "lang"
-		},
-		{
-			title: "CSS",
-			type: "styling"
-		},
-		{
-			title: "Tailwind CSS",
-			type: "styling"
-		},
-		{
-			title: "Git",
-			type: "tool"
-		},
-		{
-			title: "AWS",
-			type: "cloud"
-		},
-		{
-			title: "Firebase",
-			type: "cloud"
-		},
-		{
-			title: "Supabase",
-			type: "cloud"
-		},
-		{
-			title: "MongoDB",
-			type: "db"
-		},
-		{
-			title: "Redis",
-			type: "db"
-		},
-		{
-			title: "PostgreSQL",
-			type: "db"
-		},
+	const skills = [
+		"JS/TS",
+		"Python",
+		"Go",
+		"C/C++",
+		"HTML/CSS",
+		"Svelte",
+		"Tailwind CSS",
+		"AWS",
+		"SQL",
+		"MongoDB",
+		"AWS",
+		"Git"
 	]
 </script>
 
-<div class="flex flex-col justify-between min-h-screen">
 
-	<div class="navbar bg-base-100">
-		<div class="navbar-start">
-			<div class="dropdown">
-				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-				<!-- svelte-ignore a11y-label-has-associated-control -->
-				<label tabindex="0" class="btn btn-ghost btn-circle">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6h16M4 12h16M4 18h7"
-						/></svg
-					>
-				</label>
-				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-				<ul
-					tabindex="0"
-					class="menu menu-compact dropdown-content border border-accent mt-3 p-2 shadow bg-base-100 rounded-lg w-52"
-				>
-					<li>
-						<a href="https://github.com/moreSalt" target="_blank" rel="noreferrer">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-4 h-4"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-								/>
-							</svg>
-							Github</a
-						>
-					</li>
-					<li>
-						<a href="https://gitlab.com/bannedSubnet" target="_blank" rel="noreferrer">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-4 h-4"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-								/>
-							</svg>
-							Gitlab</a
-						>
-					</li>
-					<li>
-						<a href="https://www.linkedin.com/in/paul-rodriguez-2b255b24a" target="_blank" rel="noreferrer">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-4 h-4"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-								/>
-							</svg>
-							LinkedIn</a
-						>
-					</li>
-				</ul>
+<div class="w-screen flex flex-row justify-center items-center bg-white">
+
+
+	<div class="flex flex-col gap-8 w-screen max-w-7xl bg-white select-none p-8">
+
+
+		<div class="rounded border-base-300 max-w-3xl h-fit mt-24">
+
+			<div class="avatar">
+				<div class="w-16 rounded-full">
+				  <!-- svelte-ignore a11y-img-redundant-alt -->
+				  <img src="https://avatars.githubusercontent.com/u/83256976?v=4" alt="profile picture"/>
+				</div>
+			  </div>
+			<h1 class="text-[#27272a] font-bold text-5xl mb-6">Software Developer, Student, and Vitamin Collector</h1>
+			<p class="text-base-300 leading-6">I'm Paul, A software developer and computer science student at University of Colorado Boulder</p>
+			<div class="flex flex-row gap-2 items-center mt-6">
+				<a href="https://github.com/moreSalt" target="_blank" rel="noreferrer" class="btn btn-ghost btn-square rounded-full">
+					<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+				</a>
+				<a href="https://www.linkedin.com/in/paul-rodriguez-2b255b24a/" target="_blank" rel="noreferrer" class="btn btn-ghost btn-square rounded-full">
+					<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+				</a>
 			</div>
 		</div>
-		<div class="navbar-end">
-			<a class="btn btn-ghost btn-circle" href="mailto:mildmoose@pm.me" target="_blank">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-5 w-5"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-					/></svg
-				>
-			</a>
-		</div>
-	</div>
-	
-	<main class="w-full flex flex-col items-center gap-8 mb-4 select-none">
-		<p class="text-accent font-extrabold text-xl">Fullstack developer in Boulder.</p>
-	
-		<h1 class="text-5xl font-extrabold text-primary">Hi I'm Paul</h1>
-	
-		<!-- Short description -->
-		<p class="w-4/5 text-center">
-			I am a CS student at CU Boulder and a full-stack developer with {years}+ years of experience
-		</p>
-	
-		<!-- SKILLS -->
-		<div class="flex flex-wrap justify-center w-4/5 rounded gap-2">
-			{#each skills as skill, i}
-				<div class="badge badge-warning gap-2 items-center justify-center">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-4 w-4"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						{#if skill.type === "lang"}
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
-							/>
-						{:else if skill.type === "db"}
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-							/>
-						{:else if skill.type === "cloud"}
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"
-							/>
-						{:else if skill.type === "styling"}
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" 
-							/>
-						{:else if skill.type === "tool"}
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 11-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 016.336-4.486l-3.276 3.276a3.004 3.004 0 002.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852z"
-							/>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M4.867 19.125h.008v.008h-.008v-.008z"
-							/>
-						{/if}
-	
-					</svg>
-					{skill.title}
-				</div>
-			{/each}
-		</div>
-	
-		<!-- WORKS -->
-		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 w-4/5">
-	
-			{#each works as work, i}
-				<a 
-					class="border border-2 border-info shadow-xl rounded-lg p-4 w-full gap-2 flex flex-col"
+		
+		<div class="w-full flex flex-row justify-between gap-4 mt-24" >
+			<!-- BLOG -->
+			<div class="w-full flex-grow gap-4">
+				{#each blogs as blog}
+					<a class="rounded w-full p-4 flex flex-col gap-2 hover:bg-zinc-100 hover:cursor-pointer" href={blog.url}>
+						<p class="border-l-2 pl-4 text-sm text-zinc-400 border-zinc-400">{blog.date}</p>
+						<h3 class="text-lg text-zinc-800 font-medium">{blog.title}</h3>
+						<p class="text-zinc-600">{blog.description}</p>
+						<a href={blog.url} class="link text-sm text-blue-500">More</a>
+
+					</a>
+				{/each}
+			</div>
+
+			<div class="w-full flex flex-col gap-4 max-w-md">
+				<!-- Past work -->
+				<div class="rounded border w-full p-4 gap-2 flex flex-col h-fit">
+					<div class="w-full flex flex-row gap-4 items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+							<path stroke-linecap="round" stroke-linejoin="round" class="fill-zinc-200" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+						</svg>
+						<p class="text-zinc-400">Work Experience</p>
+					</div>
+
+					{#each experiences as exp}
+						<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+						<div tabindex="0" class="collapse collapse-arrow  rounded hover:bg-zinc-100">
+							<input type="checkbox" class="peer"/> 
+
+							<div class="flex flex-row items-center gap-3 h-16 collapse-title peer-checked:bg-zinc-100">
 					
 
+								<div class="avatar">
+									<div class="w-10 rounded-full ring ring-zinc-100 ring-offset-zinc-100 ring-offset-2">
+									<img src={exp.avatar || "https://avatars.githubusercontent.com/u/83256976?v=4"} class="bg-zinc-100" alt="{exp.company} logo"/>
+									</div>
+								</div>
 
-					href={work.url}
-					target="_blank"
-					rel="noreferrer"
-				>
-					<p class="font-semibold text-sm flex gap-1 items-center">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-5 h-5"
-						>
-	
-							{#if work.type === "work"}
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z"
-								/>
-							{:else if work.type === "edu"}
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
-								/>
-	
-							{:else}
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-								/>
-							{/if}
+								<div class="flex flex-col w-full">
+									<p class="font-semibold text-zinc-800 text-sm leading-6">{exp.company}</p>
+									<div class="flex flex-row justify-between w-full">
+										<p class="text-zinc-400 text-sm">{exp.position}</p>
+										<p class="text-zinc-400 text-sm">{exp.start} - {exp.end || "present"}</p>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="flex flex-row items-center gap-3 rounded  collapse-content peer-checked:bg-zinc-100">
+								<p class="text-sm text-zinc-600">{exp.description}</p>
+							</div>
+
+
+						</div>
+
+
+					{/each}
+				</div>
+
+				<div class="flex flex-col gap-4 rounded p-4 border">
+					<div class="w-full flex flex-row gap-4 items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+								<path stroke-linecap="round" stroke-linejoin="round" class="fill-zinc-200" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+							  </svg>
+							  
 						</svg>
-						{work.at}
-					</p>
-					<h2 
-						class="card-title text-info"
+						<p class="text-zinc-400">Skills</p>
+					</div>
+					<div class="flex flex-row flex-wrap gap-2">
+						{#each skills as skill}
+						<div class="badge badge-ghost bg-zinc-100 border-zinc-100 text-zinc-400 text-xs">{skill}</div>
+						{/each}
+					</div>
 		
-					>{work.title}</h2>
-					<p class="text-sm font-semibold">{work.startDate} - {work.endDate}</p>
-					<p>
-						{work.description}
-					</p>
-				</a>
-			{/each}
+				</div>
+			</div>
+
+
+
+
 		</div>
-	</main>
-	
-	<footer class="footer footer-center p-4 bg-base-300 text-base-content">
-		<div>
-		  <p>Made with the power of procrastination</p>
-		</div>
-	</footer>
-	
+	</div>
 </div>
