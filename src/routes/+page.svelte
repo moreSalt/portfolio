@@ -10,7 +10,7 @@
 	const experiences: Experience[] = [
         {
 			company: "University of Colorado Boulder",
-			avatar: "https://media.licdn.com/dms/image/C560BAQGueVr_GgFPZg/company-logo_100_100/0/1631322902142?e=1729123200&v=beta&t=Z37qw8ekYwi-kuBgfo5UHtatLJRVIBFQxmFtR_1eALU",
+			avatar: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.colorado.edu%2Febio%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fslider-large%2Fpublic%2Farticle-thumbnail%2Fcuboulder-large-small-01_0.png%3Fitok%3DPTgmdwcE&f=1&nofb=1&ipt=94aabf9e39f262a2fb89ba0c5c265c4935ae2007aee715747b9a80dbf74862a6&ipo=images",
 			position: "Software QA Intern",
 			start: 2024,
 			end: 0,
@@ -29,6 +29,12 @@
 	]
 
 	const blogs = [
+        {
+            title: "Travel Project",
+            description: "Find out where your favorite artists are playing around the world in a given time frame. Backend written in go, frontend sveltekit.",
+            date: "September 2024",
+            url: "https://travel.fluster.dev"
+        },
 		{
 			title: "Google Cybersecurity Certificate",
 			description: "Gained proficiency in identifying, assessing, and mitigating security threats and vulnerabilities",
@@ -36,15 +42,9 @@
 			url: "https://www.credly.com/badges/ee968251-1265-45a6-82eb-8b3ebc55ab65/linked_in_profile"
 		},
 		{
-			title: "Job Seek Project",
-			description: "Wanted to learn about vector databases, leading me to start building a full stack application that takes in a users resume and then matches them with relevant jobs. Technologies: Go, AWS, Weaviate, Mongo, & Svelte.",
-			date: "March 2024",
-			url: ""
-		},
-		{
 			title: "BetterFresh Project",
 			description: "I developed a web application that streamlined grocery shopping by leveraging HelloFresh's extensive recipe database. It integrated with the Kroger API, allowing users to directly add the ingredients from their chosen recipes to their Kroger shopping cart. Technologies: AWS, Svelte, SQL, & Go.",
-			date: "Nov 2023",
+			date: "November 2023",
 			url: ""
 		}
 
@@ -61,13 +61,12 @@
 		"AWS",
 		"SQL",
 		"MongoDB",
-		"AWS",
 		"Git"
 	]
 </script>
 
 
-<div class="w-screen flex flex-row justify-center items-center bg-white">
+<div class="w-screen min-h-screen flex flex-row justify-center items-center bg-white">
 
 
 	<div class="flex flex-col gap-8 w-screen max-w-7xl bg-white select-none p-8">
@@ -81,8 +80,8 @@
 				  <img src="https://avatars.githubusercontent.com/u/83256976?v=4" alt="profile picture"/>
 				</div>
 			  </div>
-			<h1 class="text-[#27272a] font-bold text-5xl mb-6">Software Developer, Student, and Techno Seeker</h1>
-			<p class="text-base-300 leading-6">I'm Paul, A software engineer and computer science student at University of Colorado Boulder</p>
+			<h1 class="text-[#27272a] font-bold text-5xl mb-6">Paul Rodriguez</h1>
+			<p class="text-base-300 leading-6">Software engineer and computer science student at the University of Colorado Boulder. I enjoy building and busting niche tools.</p>
 			<div class="flex flex-row gap-2 items-center mt-6">
 				<a href="https://github.com/moreSalt" target="_blank" rel="noreferrer" class="btn btn-ghost btn-square rounded-full">
 					<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
