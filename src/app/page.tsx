@@ -4,7 +4,7 @@ export default function Page() {
     return (
         <div className="w-full h-full flex flex-col gap-4 items-center justify-center">
             <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
-                Hi, I'm Paul.
+                Hi, I&rsquo;m Paul.
             </h1>
 
             <Button asChild>

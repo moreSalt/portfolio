@@ -2,14 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppSidebar } from "@/components/app-sidebar";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
     SidebarInset,
@@ -17,6 +9,7 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -61,7 +54,7 @@ export default function RootLayout({
                         </div>
                     </SidebarInset>
                 </SidebarProvider>
-        
+                <Analytics/>
             </body>
         </html>
     );
