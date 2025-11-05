@@ -11,7 +11,7 @@ export default function Page() {
             </h1>
             <Alert className="w-full max-w-lg">
                 <FrownIcon />
-                <AlertTitle>I'm ruined</AlertTitle>
+                <AlertTitle>I&rsquo;m ruined</AlertTitle>
                 <AlertDescription>
                     Giving your credit card to open ai is a dangerous game
                 </AlertDescription>
