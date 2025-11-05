@@ -21,11 +21,17 @@ const data = [
         url: "https://github.com/moreSalt/hellofresh-instacart",
     },
     {
+        title: "Jobs Data",
+        hook: "Searching for trends from job posts",
+        description: "This is my current project. I was curious about a few things. 1. What insights can be found from looking at a large data set of job postings. 2. Why do some companies slightly update job postings every day? 3. Does finding a job posting sooner result in more interviews.",
+        url: "#"
+    },
+    {
         title: "More?",
         hook: "Want to hear about what else I have worked on?",
         description: "There is a whole bunch of stuff in the private repos, but in varying states of done, broken, pivoted, etc. Reach out to me via email to learn more.",
         url: "https://fluster.dev"
-    }
+    },
 ];
 
 export default function Page() {
