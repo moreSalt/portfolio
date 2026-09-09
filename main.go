@@ -2,9 +2,11 @@ package main
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"embed"
 	"html/template"
+	"io"
 	"io/fs"
 	"log"
 	"net/http"
@@ -44,11 +46,47 @@ func loadMarkdown() string {
 	return string(raw)
 }
 
+func loadCSS() string {
+	// a static/style.css on disk overrides the embedded one
+	raw, err := os.ReadFile("static/style.css")
+	if err != nil {
+		raw, err = content.ReadFile("static/style.css")
+		if err != nil {
+			log.Fatal("no style.css found on disk or embedded")
+		}
+	}
+	return string(raw)
+}
+
+type gzipResponseWriter struct {
+	http.ResponseWriter
+	io.Writer
+}
+
+func (g *gzipResponseWriter) Write(b []byte) (int, error) {
+	return g.Writer.Write(b)
+}
+
+func gzipHandler(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
+			next.ServeHTTP(w, r)
+			return
+		}
+		w.Header().Set("Content-Encoding", "gzip")
+		w.Header().Add("Vary", "Accept-Encoding")
+		gz := gzip.NewWriter(w)
+		defer gz.Close()
+		next.ServeHTTP(&gzipResponseWriter{ResponseWriter: w, Writer: gz}, r)
+	})
+}
+
 func newHandler() http.Handler {
 	pageHTML, err := renderMarkdown(loadMarkdown())
 	if err != nil {
 		log.Fatal(err)
 	}
+	inlineCSS := loadCSS()
 
 	tmpl := template.Must(template.ParseFS(content, "templates/*.html"))
 
@@ -61,7 +99,10 @@ func newHandler() http.Handler {
 
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		data := struct{ FullHTML template.HTML }{template.HTML(pageHTML)}
+		data := struct {
+			FullHTML  template.HTML
+			InlineCSS template.CSS
+		}{template.HTML(pageHTML), template.CSS(inlineCSS)}
 		if err := tmpl.ExecuteTemplate(w, "shell", data); err != nil {
 			log.Printf("render shell: %v", err)
 		}
@@ -69,11 +110,11 @@ func newHandler() http.Handler {
 
 	staticHandler := http.StripPrefix("/static", http.FileServerFS(staticFS))
 	mux.Handle("GET /static/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "public, max-age=604800")
+		w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
 		staticHandler.ServeHTTP(w, r)
 	}))
 
-	return mux
+	return gzipHandler(mux)
 }
 
 func main() {

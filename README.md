@@ -50,7 +50,9 @@ afterwards (templates and static files are embedded).
 
 ## How it works
 
-- At startup, `content.md` is rendered to HTML in one pass.
-- `GET /` serves the full page inside a small HTML shell; `/static/*`
-  serves the stylesheet and favicon with a week-long cache header.
-- No JavaScript is shipped at all.
+- At startup, `content.md` is rendered to HTML and `style.css` is read in
+  one pass.
+- `GET /` serves the full page inside a small HTML shell with the CSS
+  inlined (no render-blocking requests); `/static/*` serves the favicon
+  with a year-long immutable cache header.
+- Text responses are gzip-compressed, and no JavaScript is shipped at all.

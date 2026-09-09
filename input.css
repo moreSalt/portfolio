@@ -11,7 +11,7 @@ main h2 {
 }
 
 main h2::before {
-  content: "## ";
+  content: "## " / "";
 }
 
 main h3 {
