@@ -1,7 +1,8 @@
-package portfolio
+package main
 
 import (
 	"bytes"
+	"context"
 	"embed"
 	"fmt"
 	"html/template"
@@ -9,8 +10,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/yuin/goldmark"
 )
@@ -119,9 +122,9 @@ func loadMarkdown() string {
 	return string(raw)
 }
 
-// NewHandler builds the site's HTTP handler: the shell page, the htmx
+// newHandler builds the site's HTTP handler: the shell page, the htmx
 // fragment endpoints, and the static file server.
-func NewHandler() http.Handler {
+func newHandler() http.Handler {
 	sections, err := buildSections(loadMarkdown())
 	if err != nil {
 		log.Fatal(err)
@@ -171,4 +174,34 @@ func NewHandler() http.Handler {
 	}))
 
 	return mux
+}
+
+func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	srv := &http.Server{
+		Addr:              ":" + port,
+		Handler:           newHandler(),
+		ReadHeaderTimeout: 5 * time.Second,
+	}
+
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+
+	go func() {
+		log.Printf("listening on http://localhost:%s", port)
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatal(err)
+		}
+	}()
+
+	<-ctx.Done()
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := srv.Shutdown(shutdownCtx); err != nil {
+		log.Printf("shutdown: %v", err)
+	}
 }

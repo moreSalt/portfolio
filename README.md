@@ -10,24 +10,19 @@ Markdown is rendered with [goldmark](https://github.com/yuin/goldmark).
 ## Run
 
 ```bash
-go run ./cmd/server
+go build -o portfolio .
+./portfolio
 ```
 
 Then open http://localhost:8080 (set `PORT` to change the port).
 
 ## Deploy (Vercel)
 
-The site runs on Vercel as a single Go serverless function
-(`api/index.go`, built from the root `portfolio` package). A catch-all
-rewrite in `vercel.json` routes `/`, `/frag/*`, and `/static/*` to it.
-
-To deploy: push to GitHub and import the repo at
-[vercel.com/new](https://vercel.com/new) — Vercel detects the Go
-function automatically, no build settings needed. Or with the CLI:
-
-```bash
-vercel
-```
+Push to GitHub and import the repo at
+[vercel.com/new](https://vercel.com/new). Vercel detects the Go server
+(`main.go` at the repo root), builds it, and routes all traffic to it —
+no configuration files needed. The server reads the port from `PORT`,
+which Vercel sets automatically.
 
 ## Content
 
