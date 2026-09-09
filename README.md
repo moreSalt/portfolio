@@ -1,11 +1,10 @@
 # Paul Rodriguez — Portfolio
 
 A single-page, black-and-white portfolio generated from `content.md`.
-One white page, monospace text, typed out section by section on load
-like a terminal.
+One white page, monospace text, fully static — no JavaScript.
 
-Built with Go, htmx, Tailwind CSS, and a tiny vanilla-JS typewriter.
-Markdown is rendered with [goldmark](https://github.com/yuin/goldmark).
+Built with Go, Tailwind CSS, and Markdown rendered with
+[goldmark](https://github.com/yuin/goldmark).
 
 ## Run
 
@@ -29,7 +28,6 @@ which Vercel sets automatically.
 Everything on the page comes from `content.md`:
 
 - The `# heading` at the top becomes the intro.
-- Each `## heading` starts a new section, fetched and typed in order.
 - Standard Markdown works: paragraphs, **bold**, [links](...), lists.
 - External links (http/https) automatically open in a new tab.
 
@@ -52,15 +50,7 @@ afterwards (templates and static files are embedded).
 
 ## How it works
 
-- `GET /` serves a tiny HTML shell.
-- At startup, `content.md` is split at each `##` heading; every section
-  becomes an htmx fragment endpoint at `/frag/{slug}` (slug derived from
-  the heading), chained in document order.
-- The shell fetches the first fragment on load; the typewriter types it
-  with a human-ish cadence (jitter, punctuation pauses), fires a `typed`
-  event, and the next fragment is fetched — chaining down the page while
-  auto-scrolling.
-- The `skip »` button (bottom right) instantly finishes all typing and
-  hides itself. Honors `prefers-reduced-motion` (everything renders
-  instantly).
-- With JS disabled, a `<noscript>` block renders the full page statically.
+- At startup, `content.md` is rendered to HTML in one pass.
+- `GET /` serves the full page inside a small HTML shell; `/static/*`
+  serves the stylesheet and favicon with a week-long cache header.
+- No JavaScript is shipped at all.

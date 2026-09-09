@@ -8,15 +8,11 @@
 <title>Paul Rodriguez</title>
 <link rel="icon" href="/static/favicon.ico">
 <link rel="stylesheet" href="/static/style.css">
-<script src="/static/htmx.min.js" defer></script>
-<script src="/static/typewriter.js" defer></script>
 </head>
 <body class="bg-white font-mono leading-relaxed text-black antialiased">
 <main class="mx-auto max-w-2xl px-5 py-16">
-<div hx-get="/frag/{{.FirstFrag}}" hx-trigger="load" hx-swap="outerHTML"></div>
-<noscript>{{.FullHTML}}</noscript>
+{{.FullHTML}}
 </main>
-<button id="skip" type="button" class="fixed right-4 bottom-4 cursor-pointer border border-black bg-white px-3 py-1 text-sm hover:bg-black hover:text-white">skip &raquo;</button>
 </body>
 </html>
 {{end}}
