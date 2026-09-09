@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@source "./templates";
+
+main h1 {
+  @apply text-2xl font-bold;
+}
+
+main h2 {
+  @apply mt-10 font-bold;
+}
+
+main h2::before {
+  content: "## ";
+}
+
+main h3 {
+  @apply mt-6 font-bold;
+}
+
+main p {
+  @apply my-2;
+}
+
+main a {
+  @apply underline underline-offset-2 hover:bg-black hover:text-white;
+}
+
+main ul,
+main ol {
+  @apply my-2 pl-6;
+}
+
+main ul {
+  @apply list-disc;
+}
+
+main ol {
+  @apply list-decimal;
+}
+
+.typing::after {
+  content: "\258C";
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
