@@ -69,7 +69,9 @@ func (g *gzipResponseWriter) Write(b []byte) (int, error) {
 
 func gzipHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
+		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") ||
+			strings.HasSuffix(r.URL.Path, ".jsdos") ||
+			strings.HasSuffix(r.URL.Path, ".zip") {
 			next.ServeHTTP(w, r)
 			return
 		}
@@ -97,14 +99,22 @@ func newHandler() http.Handler {
 
 	mux := http.NewServeMux()
 
+	data := struct {
+		FullHTML  template.HTML
+		InlineCSS template.CSS
+	}{template.HTML(pageHTML), template.CSS(inlineCSS)}
+
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		data := struct {
-			FullHTML  template.HTML
-			InlineCSS template.CSS
-		}{template.HTML(pageHTML), template.CSS(inlineCSS)}
 		if err := tmpl.ExecuteTemplate(w, "shell", data); err != nil {
 			log.Printf("render shell: %v", err)
+		}
+	})
+
+	mux.HandleFunc("GET /ski-or-die", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		if err := tmpl.ExecuteTemplate(w, "game", data); err != nil {
+			log.Printf("render game: %v", err)
 		}
 	})
 

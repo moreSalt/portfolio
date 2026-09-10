@@ -1,7 +1,8 @@
 # Paul Rodriguez — Portfolio
 
 A single-page, black-and-white portfolio generated from `content.md`.
-One white page, monospace text, fully static — no JavaScript.
+One white page, monospace text, plus a playable copy of *Ski or Die*
+at `/ski-or-die`.
 
 Built with Go, Tailwind CSS, and Markdown rendered with
 [goldmark](https://github.com/yuin/goldmark).
@@ -54,5 +55,9 @@ afterwards (templates and static files are embedded).
   one pass.
 - `GET /` serves the full page inside a small HTML shell with the CSS
   inlined (no render-blocking requests); `/static/*` serves the favicon
-  with a year-long immutable cache header.
-- Text responses are gzip-compressed, and no JavaScript is shipped at all.
+  and game assets with a year-long immutable cache header.
+- Text responses are gzip-compressed (already-compressed bundles like
+  `.jsdos` are skipped).
+- `GET /ski-or-die` serves a playable in-browser copy of *Ski or Die*
+  (DOS, 1990) via a self-hosted js-dos runtime; the emulator files and the
+  game bundle live in `static/game/`.

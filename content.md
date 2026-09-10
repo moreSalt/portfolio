@@ -4,7 +4,7 @@ dance || climb || snowboard || code
 
 ## bio
 
-Coding has been a large part of my life since 2020. My latest projects have been focused around speed and low compute. In my free time I'm bouldering year round. In the winter I am snowboarding. At night I love a good techno concert. 
+My latest projects have been focused around speed and low compute. In my free time I'm bouldering year round. In the winter I am snowboarding. At night I love a good techno concert. 
 
 ## experience
 
@@ -33,9 +33,9 @@ Software Engineer. Stackd was a desktop autocheckout bot. It's purpose was to bu
 2024 / Coursera / Google Cybersecurity Professional Certificate
 
 ## skills
-go / typescript / python / c++ / next / aws / 
+go / typescript / python / c++ / next / aws
 
 
 ## links
 
-[email](mailto:mildmoose@pm.me) · [github](https://github.com/moreSalt/) · [linkedin](https://www.linkedin.com/in/paul-rodriguez-2b255b24a/)
+[email](mailto:mildmoose@pm.me) · [github](https://github.com/moreSalt/) · [linkedin](https://www.linkedin.com/in/paul-rodriguez-2b255b24a/) · [ski or die](/ski-or-die)

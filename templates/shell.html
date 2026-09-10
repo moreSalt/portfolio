@@ -13,6 +13,299 @@
 <main class="mx-auto max-w-2xl px-5 py-16">
 {{.FullHTML}}
 </main>
+<canvas id="egg" class="pointer-events-none fixed inset-0 z-40 hidden h-full w-full"></canvas>
+<script>
+const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+const canvas = document.getElementById("egg");
+const ctx = canvas.getContext("2d");
+const rand = (a, b) => a + Math.random() * (b - a);
+let game = null, raf = null, keys = {}, progress = 0;
+
+document.querySelectorAll("main p").forEach(p => {
+  p.innerHTML = p.innerHTML.replaceAll("snowboard", '<span data-egg class="border-b border-dotted border-slate-400 cursor-pointer">snowboard</span>');
+});
+document.querySelectorAll("[data-egg]").forEach(el =>
+  el.addEventListener("mouseenter", () => { location.href = "/ski-or-die"; }));
+
+const RH = 46, RD = 26;
+
+function start() {
+  cancelAnimationFrame(raf);
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+  canvas.style.display = "block";
+  game = {
+    x: Math.max(90, innerWidth * 0.16),
+    h: 0, vy: 0, grounded: true, duck: false,
+    px: 0, speed: 6, dist: 0, over: false, jumpQueued: false,
+    obstacles: [], particles: [], spawnIn: 70,
+    hi: +localStorage.getItem("egg-hi") || 0,
+    clouds: Array.from({ length: 5 }, () => ({
+      x: rand(0, innerWidth), y: rand(30, innerHeight * 0.4),
+      s: rand(0.15, 0.45), k: rand(0.7, 1.4)
+    })),
+    flakes: Array.from({ length: 70 }, () => ({
+      x: rand(0, innerWidth), y: rand(0, innerHeight),
+      r: rand(1, 2.4), s: rand(0.4, 1.5), drift: rand(0.2, 0.9)
+    }))
+  };
+  raf = requestAnimationFrame(tick);
+}
+
+function stop() {
+  cancelAnimationFrame(raf);
+  canvas.style.display = "none";
+  game = null;
+}
+
+function ridge(off, base, amp, color) {
+  const W = canvas.width, H = canvas.height;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(0, H);
+  for (let x = 0; x <= W; x += 24) {
+    const s = x + off;
+    const h = (Math.sin(s * 0.008) * 0.5 + 0.5) * amp * 0.6
+            + (Math.sin(s * 0.023 + 2) * 0.5 + 0.5) * amp * 0.4;
+    ctx.lineTo(x, base - h);
+  }
+  ctx.lineTo(W, H);
+  ctx.fill();
+}
+
+function pines(off, base, color) {
+  const W = canvas.width, sp = 150;
+  ctx.fillStyle = color;
+  for (let i = Math.floor(off / sp) - 1; i * sp - off < W + sp; i++) {
+    const x = i * sp - off;
+    const h = 34 + Math.abs((Math.sin(i * 91.7) * 43758.5) % 1) * 52;
+    ctx.beginPath();
+    ctx.moveTo(x, base - h);
+    ctx.lineTo(x - 15, base);
+    ctx.lineTo(x + 15, base);
+    ctx.fill();
+  }
+}
+
+function tick(t) {
+  const g = game, W = canvas.width, H = canvas.height, gy = H * 0.78;
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.fillStyle = "#e4e4e7";
+  for (const c of g.clouds) {
+    c.x -= c.s;
+    if (c.x < -100) { c.x = W + 100; c.y = rand(30, H * 0.4); }
+    ctx.beginPath();
+    ctx.roundRect(c.x, c.y, 70 * c.k, 16 * c.k, 8 * c.k);
+    ctx.roundRect(c.x + 14 * c.k, c.y - 9 * c.k, 34 * c.k, 16 * c.k, 8 * c.k);
+    ctx.fill();
+  }
+
+  ctx.fillStyle = "#e7e5e4";
+  ctx.beginPath();
+  ctx.arc(W * 0.8, H * 0.16, 34, 0, 7);
+  ctx.fill();
+
+  ridge(g.dist * 2, H * 0.52, H * 0.16, "#f4f4f5");
+  pines(g.dist * 9, gy - 4, "#d4d4d8");
+
+  ctx.strokeStyle = "#52525b";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(0, gy);
+  ctx.lineTo(W, gy);
+  ctx.stroke();
+  ctx.fillStyle = "#fafafa";
+  ctx.fillRect(0, gy + 2, W, H - gy);
+  ctx.strokeStyle = "#d4d4d8";
+  ctx.lineWidth = 2;
+  for (let x = -(g.px % 70); x < W; x += 70) {
+    ctx.beginPath();
+    ctx.moveTo(x, gy + 9);
+    ctx.lineTo(x - 9, gy + 15);
+    ctx.stroke();
+  }
+
+  for (const f of g.flakes) {
+    f.y += f.s;
+    f.x -= f.drift + g.speed * 0.08;
+    if (f.y > H) { f.y = -4; f.x = rand(0, W + 100); }
+    if (f.x < -4) f.x = W + 4;
+    ctx.fillStyle = "#d4d4d8";
+    ctx.beginPath();
+    ctx.arc(f.x, f.y, f.r * 0.6, 0, 7);
+    ctx.fill();
+  }
+
+  if (!g.over) {
+    g.speed = Math.min(13.5, g.speed + 0.0022);
+    g.dist += g.speed / 6;
+    g.px += g.speed;
+
+    if (g.jumpQueued && g.grounded) {
+      g.vy = H * 0.021;
+      g.grounded = false;
+      for (let i = 0; i < 6; i++)
+        g.particles.push({ x: g.x - 10, y: gy - 2, vx: rand(-2, 0), vy: rand(-1.5, 0), life: rand(10, 20) });
+    }
+    g.jumpQueued = false;
+    g.duck = !!keys.ArrowDown;
+    if (!g.grounded) {
+      g.vy -= H * 0.0011 * (g.duck ? 2.6 : 1);
+      g.h += g.vy;
+      if (g.h <= 0) {
+        g.h = 0;
+        g.vy = 0;
+        g.grounded = true;
+        for (let i = 0; i < 12; i++)
+          g.particles.push({ x: g.x + rand(-14, 6), y: gy - 2, vx: rand(-3, 1), vy: rand(-2.4, -0.3), life: rand(12, 24) });
+      }
+    }
+    if (g.grounded)
+      for (let i = 0; i < 2; i++)
+        g.particles.push({ x: g.x - 12, y: gy - 2, vx: rand(-2.5, -0.5) - g.speed * 0.15, vy: rand(-1.6, -0.2), life: rand(14, 26) });
+
+    for (const p of g.particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.12;
+      p.life--;
+    }
+    g.particles = g.particles.filter(p => p.life > 0 && p.y < gy + 6);
+
+    if (--g.spawnIn <= 0) {
+      const r = Math.random();
+      if (r < 0.28)
+        g.obstacles.push({ type: "branch", x: W + 60, w: rand(30, 48) });
+      else {
+        g.obstacles.push({ type: "rock", x: W + 60, w: rand(24, 40), h: rand(20, 34) });
+        if (r > 0.82)
+          g.obstacles.push({ type: "rock", x: W + 60 + rand(34, 44), w: rand(20, 30), h: rand(18, 28) });
+      }
+      g.spawnIn = rand(300, 560) / g.speed;
+    }
+
+    const rTop = gy - g.h - (g.duck && g.grounded ? RD : RH);
+    const rBot = gy - g.h;
+    for (const o of g.obstacles) {
+      o.x -= g.speed;
+      const oTop = o.type === "branch" ? gy - 46 : gy - o.h;
+      const oBot = o.type === "branch" ? gy - 32 : gy;
+      if (g.x + 14 > o.x - o.w / 2 && g.x - 14 < o.x + o.w / 2 && rBot > oTop && rTop < oBot)
+        g.over = true;
+    }
+    g.obstacles = g.obstacles.filter(o => o.x > -80);
+    if (g.over && Math.floor(g.dist) > g.hi) {
+      g.hi = Math.floor(g.dist);
+      localStorage.setItem("egg-hi", g.hi);
+    }
+  }
+
+  for (const o of g.obstacles) {
+    ctx.beginPath();
+    if (o.type === "branch") {
+      ctx.strokeStyle = "#52525b";
+      ctx.lineWidth = 4;
+      ctx.lineCap = "round";
+      ctx.moveTo(o.x - o.w / 2, gy - 38);
+      ctx.lineTo(o.x + o.w / 2, gy - 40);
+      ctx.moveTo(o.x + o.w / 2, gy - 40);
+      ctx.lineTo(o.x + o.w / 2 + 10, gy - 52);
+      ctx.moveTo(o.x - 6, gy - 38);
+      ctx.lineTo(o.x - 10, gy - 30);
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = "#71717a";
+      ctx.moveTo(o.x - o.w / 2, gy);
+      ctx.lineTo(o.x - o.w * 0.28, gy - o.h);
+      ctx.lineTo(o.x + o.w * 0.05, gy - o.h * 0.72);
+      ctx.lineTo(o.x + o.w * 0.32, gy - o.h * 1.04);
+      ctx.lineTo(o.x + o.w / 2, gy);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  for (const p of g.particles) {
+    ctx.globalAlpha = Math.min(1, p.life / 12) * 0.8;
+    ctx.fillStyle = "#a1a1aa";
+    ctx.fillRect(p.x, p.y, 2.5, 2.5);
+  }
+  ctx.globalAlpha = 1;
+
+  ctx.save();
+  ctx.translate(g.x, gy - g.h);
+  ctx.rotate(g.grounded ? 0 : Math.max(-0.3, Math.min(0.4, -g.vy * 0.035)));
+  const crouch = g.duck && g.grounded;
+  ctx.fillStyle = "#18181b";
+  ctx.beginPath();
+  ctx.roundRect(-20, -5, 40, 5, 2.5);
+  ctx.fill();
+  ctx.fillStyle = "#3f3f46";
+  if (crouch) {
+    ctx.beginPath();
+    ctx.roundRect(-9, -20, 20, 15, 5);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(10, -22, 5.5, 0, 7);
+    ctx.fill();
+  } else {
+    ctx.beginPath();
+    ctx.roundRect(-6, -34, 13, 30, 5);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(3, -39, 5.5, 0, 7);
+    ctx.fill();
+    ctx.strokeStyle = "#3f3f46";
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(0, -26);
+    ctx.lineTo(12, -18);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  ctx.save();
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "#52525b";
+  ctx.textAlign = "right";
+  const m = String(Math.floor(g.dist)).padStart(5, "0");
+  const hi = String(Math.floor(g.hi)).padStart(5, "0");
+  ctx.fillText("HI " + hi + "  " + m + "m", W - 16, 28);
+  if (g.over) {
+    ctx.textAlign = "center";
+    ctx.font = "28px monospace";
+    ctx.fillStyle = "#3f3f46";
+    ctx.fillText("wiped out", W / 2, H / 2 - 20);
+    ctx.font = "16px monospace";
+    ctx.fillStyle = "#71717a";
+    ctx.fillText(Math.floor(g.dist) + "m — enter to retry, esc to quit", W / 2, H / 2 + 12);
+  }
+  ctx.restore();
+  raf = requestAnimationFrame(tick);
+}
+
+addEventListener("keydown", e => {
+  const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  progress = k === KONAMI[progress] ? progress + 1 : (k === KONAMI[0] ? 1 : 0);
+  if (progress === KONAMI.length) {
+    progress = 0;
+    game ? stop() : start();
+    return;
+  }
+  if (game) {
+    if (k === "Escape") { stop(); return; }
+    if (k.startsWith("Arrow") || k === " ") e.preventDefault();
+    keys[k] = true;
+    if (game.over) { if (k === "Enter" || k === " ") start(); }
+    else if (k === " " || k === "ArrowUp") game.jumpQueued = true;
+  }
+});
+addEventListener("keyup", e => { keys[e.key] = false; });
+</script>
 </body>
 </html>
 {{end}}

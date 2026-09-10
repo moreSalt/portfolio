@@ -1,0 +1,54 @@
+{{define "game"}}<!doctype html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Ski or Die (1990) playable in the browser">
+<title>Ski or Die</title>
+<link rel="icon" href="/static/favicon.ico">
+<link rel="stylesheet" href="/static/game/js-dos/js-dos.css">
+<style>{{.InlineCSS}}</style>
+</head>
+<body class="flex h-full flex-col bg-zinc-950 font-mono text-zinc-400 antialiased">
+<header class="flex items-center justify-between px-4 py-2 text-[13px]">
+  <a class="text-zinc-200 no-underline hover:underline" href="/">&larr; back</a>
+  <span>ski or die (1990) &mdash; wasd / arrows &middot; space = enter &middot; alt+q quits</span>
+</header>
+<div id="player" class="min-h-0 flex-1"></div>
+<script src="/static/game/js-dos/js-dos.js"></script>
+<script>
+  Dos(document.getElementById("player"), {
+    url: "/static/game/ski-or-die.jsdos",
+    pathPrefix: "/static/game/js-dos/emulators/",
+  });
+
+  const ARROW_FOR = { KeyW: "ArrowUp", KeyA: "ArrowLeft", KeyS: "ArrowDown", KeyD: "ArrowRight" };
+  const KEYCODE_FOR = { ArrowUp: 38, ArrowLeft: 37, ArrowDown: 40, ArrowRight: 39, Enter: 13 };
+
+  function forward(type, code) {
+    const keyCode = KEYCODE_FOR[code];
+    document.dispatchEvent(new KeyboardEvent(type, {
+      key: code, code: code, keyCode: keyCode, which: keyCode,
+      bubbles: true, cancelable: true,
+    }));
+  }
+
+  addEventListener("keydown", e => {
+    if (e.altKey && e.code === "KeyQ") {
+      e.preventDefault();
+      location.href = "/";
+      return;
+    }
+    if (e.repeat || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (ARROW_FOR[e.code]) forward("keydown", ARROW_FOR[e.code]);
+    if (e.code === "Space") forward("keydown", "Enter"); // screens that only read Enter
+  });
+  addEventListener("keyup", e => {
+    if (ARROW_FOR[e.code]) forward("keyup", ARROW_FOR[e.code]);
+    if (e.code === "Space") forward("keyup", "Enter");
+  });
+</script>
+</body>
+</html>
+{{end}}
