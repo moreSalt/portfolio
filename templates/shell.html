@@ -10,7 +10,7 @@
 <style>{{.InlineCSS}}</style>
 </head>
 <body class="bg-white font-mono leading-relaxed text-black antialiased">
-<main class="mx-auto max-w-2xl px-5 py-16">
+<main class="mx-auto max-w-2xl px-5 py-16 [&_h1]:text-2xl [&_h1]:font-bold [&_h2]:mt-10 [&_h2]:font-bold [&_h3]:mt-6 [&_h3]:font-bold [&_p]:my-2 [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:bg-black [&_a:hover]:text-white [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_pre]:my-2 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-zinc-200 [&_pre]:p-4 [&_pre]:text-sm [&_:not(pre)>code]:bg-zinc-200 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:px-1">
 {{.FullHTML}}
 </main>
 <canvas id="egg" class="pointer-events-none fixed inset-0 z-40 hidden h-full w-full"></canvas>
@@ -22,7 +22,8 @@ const rand = (a, b) => a + Math.random() * (b - a);
 let game = null, raf = null, keys = {}, progress = 0;
 
 document.querySelectorAll("main p").forEach(p => {
-  p.innerHTML = p.innerHTML.replaceAll("snowboard", '<span data-egg class="border-b border-dotted border-slate-400 cursor-pointer">snowboard</span>');
+  if (!p.textContent.includes("||")) return;
+  p.innerHTML = p.innerHTML.replace(/\bsnowboard\b/, '<span data-egg class="border-b border-dotted border-slate-400 cursor-pointer">snowboard</span>');
 });
 document.querySelectorAll("[data-egg]").forEach(el =>
   el.addEventListener("mouseenter", () => { location.href = "/ski-or-die"; }));

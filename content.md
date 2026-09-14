@@ -1,10 +1,9 @@
 # Hi, I'm Paul.
 
-dance || climb || snowboard || code
+climb || code || snowboard || techno
 
 ## bio
-
-My latest projects have been focused around speed and low compute. In my free time I'm bouldering year round. In the winter I am snowboarding. At night I love a good techno concert. 
+I build stuff. I hug rock. I slip and slide down mountains. I dance to music that will never be on my spotify.
 
 ## experience
 

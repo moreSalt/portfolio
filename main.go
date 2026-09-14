@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
 
 //go:embed templates static content.md
@@ -23,7 +24,13 @@ var content embed.FS
 
 // renderMarkdown renders the whole document to HTML in one pass.
 func renderMarkdown(src string) (string, error) {
-	md := goldmark.New()
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("github"),
+			),
+		),
+	)
 	var buf bytes.Buffer
 	if err := md.Convert([]byte(src), &buf); err != nil {
 		return "", err
