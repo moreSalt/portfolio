@@ -37,4 +37,4 @@ go / typescript / python / c++ / next / aws
 
 ## links
 
-[email](mailto:mildmoose@pm.me) · [github](https://github.com/moreSalt/) · [linkedin](https://www.linkedin.com/in/paul-rodriguez-2b255b24a/) · [ski or die](/ski-or-die)
+[email](mailto:mildmoose@pm.me) [github](https://github.com/moreSalt/) [linkedin](https://www.linkedin.com/in/paul-rodriguez-2b255b24a/)
